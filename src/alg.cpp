@@ -21,7 +21,7 @@ int countpairs2(int *arr, int len, int value) {
             right--;
         } else if (sum < value) {
             left++;
-        else
+        } else {
             right--;
     }
     return 0;
@@ -39,7 +39,7 @@ int countpairs3(int *arr, int len, int value) {
                 break;
             } else if (sum < value) {
                 low = mid + 1;
-            else
+            } else {
                 high = mid - 1;
         }
     }
