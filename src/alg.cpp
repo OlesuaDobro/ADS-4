@@ -1,5 +1,5 @@
 // Copyright 2021 NNTU-CS
-int countPairs1(int *arr, int len, int value) {
+int countpairs1(int *arr, int len, int value) {
     int count = 0;
     for (int i = 0; i < len; i++) {
         for (int j = i + 1; j < len; j++) {
@@ -8,7 +8,7 @@ int countPairs1(int *arr, int len, int value) {
             }
         }
     }
-    return 0;
+    return count;
 }
 int countPairs2(int *arr, int len, int value) {
     int count = 0;
@@ -26,25 +26,66 @@ int countPairs2(int *arr, int len, int value) {
             right--;
         }
     }
-    return 0;
+    return count;
 }
-int countPairs3(int *arr, int len, int value) {
-    int count = 0;
-    for (int i = 0; i < len; i++) {
-        int target = value - arr[i];
-        int low = i + 1;
-        int high = len - 1;
-        while (low <= high) {
-            int mid = (low + high) / 2;
-            if (arr[mid] == target) {
-                count++;
+int countPairs3(int* arr, int len, int value) {
+    int count = 0, y = 0, left = 0, right = len;
+    for (int i = 0; i < (len - 1); i++) {
+        if (arr[i] > value) {
+            break;
+        }
+        left = i;
+        right = len--;
+        while (left < right) {
+            y = left + ((right - left) / 2);
+            if (left == right) {
                 break;
-            } else if (arr[mid] < target) {
-                low = mid + 1;
-            } else {
-                high = mid - 1;
+            }
+            if ((arr[i] + arr[j]) > value) {
+                for (int n = (j - 1); n >= left; n--) {
+                    right = n++;
+                    if (arr[j] != arr[n]) {
+                        break;
+                    }
+                }
+                if (right - left == 1) {
+                    break;
+                }
+            }
+            if ((arr[i] + arr[j]) < value) {
+                for (int n = (y + 1); n <= right; n++) {
+                    left = n--;
+                    if (arr[j] != arr[n]) {
+                        break;
+                    }
+                }
+                if (right - left == 1) {
+                    break;
+                }
+            }
+            if ((arr[i] + arr[j]) == value) {
+                int t = right;
+                for (int n = (j + 1); n <= t; n++) {
+                    right = n - 1;
+                    if (arr[j] != arr[n]) {
+                        break;
+                    }
+                }
+                t = left;
+                for (int n = (j - 1); n >= t; n--) {
+                    left = n++;
+                    if (arr[j] != arr[n]) {
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        for (int y = left; y <= right; j++) {
+            if (((arr[i] + arr[y]) == value) && (i != y)) {
+                count++;
             }
         }
     }
-    return 0;
+    return count;
 }
